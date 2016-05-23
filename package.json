@@ -1,7 +1,7 @@
 {
   "name": "jquery-tips",
   "version": "1.0.0",
-  "description": "Useful jQuery info",
+  "description": "Useful jQuery tips and examples",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
