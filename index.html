@@ -1,0 +1,550 @@
+<html>
+<head>
+  <title>Jquery Tips</title>
+  <meta name="description" content="Useful jQuery Tips and Information" />
+  <link rel="stylesheet" type="text/css" href="/node_modules/foundation-sites/dist/foundation.min.css" />
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/default.min.css" />
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/node_modules/foundation-sites/dist/foundation.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <style>
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .menu .active {
+      background: #2199e8;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="columns large-offset-2 large-8">
+      <h1>jQuery Tips and Examples</h1>
+      <div>
+        <h2 id="selectors" data-magellan-target="first">Selectors</h2>
+        <p>Jquery has a search engine which allows us make queries with CSS selectors to retrieve DOM elements. The following tips show how to use them properly.</p>
+          <div id="avoid-jquery-selectors"class="section">
+            <h3>Avoid jQuery Selector Extensions</h3>
+            <p><a href="https://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery Selector Extensions</a> cannot take advantage of the performance boost provided by the native querySelectorAll(). Try to use native css selectors if is possible. </p>
+            <h4>Example</h4>
+            <ul class="tabs" data-tabs id="example1-tabs">
+              <li class="tabs-title is-active"><a href="#result-example1" aria-selected="true">Result</a></li>
+              <li class="tabs-title"><a href="#html-example1">HTML</a></li>
+              <li class="tabs-title"><a href="#js-example1">JavaScript</a></li>
+            </ul>
+            <div class="tabs-content" data-tabs-content="example1-tabs">
+              <div class="tabs-panel is-active" id="result-example1">
+                <div class="example">
+<button class="button">button</button>
+
+<div> Time with :button in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with css selector in 10000 iterations: <span class="iteration2"></span></div>
+                </div>
+              </div>
+              <div class="tabs-panel" id="html-example1">
+                <pre>
+                  <code class="html">
+                  </code>
+                </pre>
+              </div>
+              <div class="tabs-panel" id="js-example1">
+                <pre>
+                  <code class="js">
+              </code>
+              </pre>
+              </div>
+            </div>
+              <script>
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#avoid-jquery-selectors');
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example :button');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example button, .example input[type="button"]');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
+              </script>
+            </div>
+
+
+            <div id="excessive-specificity" class="section">
+              <h3>Avoid Excessive Specificity</h3>
+              <p>Don't specify all the path to retrieve a DOM element. Try to optimize the selectors that you need.</p>
+              <h4>Example</h4>
+              <ul class="tabs" data-tabs id="example2-tabs">
+                <li class="tabs-title is-active"><a href="#result-example2" aria-selected="true">Result</a></li>
+                <li class="tabs-title"><a href="#html-example2">HTML</a></li>
+                <li class="tabs-title"><a href="#js-example2">JavaScript</a></li>
+              </ul>
+              <div class="tabs-content" data-tabs-content="example2-tabs">
+                <div class="tabs-panel is-active" id="result-example2">
+                  <div class="example">
+  <div class="level1">
+    <div class="level2">
+      <div class="level3">
+        Level 3
+      </div>
+    </div>
+    <div class="level2">
+      <div class="level3">
+        Level 3
+      </div>
+    </div>
+  </div>
+
+  <div> Time with '.example div.level1 div.level2 div.level3' in 10000 iterations: <span class="iteration1"></span></div>
+  <div> Time with '.example .level3' in 10000 iterations: <span class="iteration2"></span></div>
+                  </div>
+                </div>
+                <div class="tabs-panel" id="html-example2">
+                  <pre>
+                    <code class="html">
+                    </code>
+                  </pre>
+                </div>
+                <div class="tabs-panel" id="js-example2">
+                  <pre>
+                    <code class="js">
+                    </code>
+                </pre>
+                </div>
+              </div>
+                <script>
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#excessive-specificity');
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level2 div.level3');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example .level3');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
+                </script>
+              </div>
+
+
+                <div id="id-save-queries"class="section">
+                  <h3>Save repeated queries</h3>
+                  <p>If you have to use the same query several times, save the result in a variable to avoid repeating the search.</p>
+                  <h4>Example</h4>
+                  <ul class="tabs" data-tabs id="example3-tabs">
+                    <li class="tabs-title is-active"><a href="#result-example3" aria-selected="true">Result</a></li>
+                    <li class="tabs-title"><a href="#html-example3">HTML</a></li>
+                    <li class="tabs-title"><a href="#js-example3">JavaScript</a></li>
+                  </ul>
+                  <div class="tabs-content" data-tabs-content="example3-tabs">
+                    <div class="tabs-panel is-active" id="result-example3">
+                      <div class="example">
+<div class="level1">
+  <div class="level2">
+      <div class="level3">
+        Level 3
+      </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+      Level 3
+    </div>
+  </div>
+</div>
+
+<div> Time with repeated selector in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with saved selector in 10000 iterations: <span class="iteration2"></span></div>
+                      </div>
+                    </div>
+                    <div class="tabs-panel" id="html-example3">
+                      <pre>
+                        <code class="html">
+                        </code>
+                      </pre>
+                    </div>
+                    <div class="tabs-panel" id="js-example3">
+                      <pre>
+                        <code class="js">
+                    </code>
+                    </pre>
+                    </div>
+                  </div>
+                    <script>
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#id-save-queries');
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level2 div.level3').html($container.find('.example div.level1 div.level2 div.level3').html());
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
+
+  startTime = new Date();
+  var $element = $container.find('.example div.level1 div.level2 div.level3');
+  for (i = 0; i < 10000; i++) {
+    $element.html($element.html());
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
+                    </script>
+                  </div>
+
+                  <div id="id-save-container"class="section">
+                    <h3>Save repeated container references</h3>
+                    <p>If you have to use the same container several times, save the container in a variable and search inside to avoid repeating the search of the container.</p>
+                    <h4>Example</h4>
+                    <ul class="tabs" data-tabs id="example4-tabs">
+                      <li class="tabs-title is-active"><a href="#result-example4" aria-selected="true">Result</a></li>
+                      <li class="tabs-title"><a href="#html-example4">HTML</a></li>
+                      <li class="tabs-title"><a href="#js-example4">JavaScript</a></li>
+                    </ul>
+                    <div class="tabs-content" data-tabs-content="example4-tabs">
+                      <div class="tabs-panel is-active" id="result-example4">
+                        <div class="example">
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
+
+<div> Time with repeated container in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with saved container in 10000 iterations: <span class="iteration2"></span></div>
+                        </div>
+                      </div>
+                      <div class="tabs-panel" id="html-example4">
+                        <pre>
+                          <code class="html">
+                          </code>
+                        </pre>
+                      </div>
+                      <div class="tabs-panel" id="js-example4">
+                        <pre>
+                          <code class="js">
+                      </code>
+                      </pre>
+                      </div>
+                    </div>
+                      <script>
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#id-save-container');
+
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level3:first-child');
+    $container.find('.example div.level1 div.level3:last-child');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
+
+  startTime = new Date();
+  var $element = $container.find('.example div.level1');
+  for (i = 0; i < 10000; i++) {
+    $element.find('div.level3:first-child');
+    $element.find('div.level3:last-child');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
+                      </script>
+                    </div>
+    </div>
+      <div>
+
+
+
+        <h2 id="traversing" data-magellan-target="traversing">Traversing</h2>
+        <p>We can traverse the dom elements very easily using the useful jQuery traversing functions. The following examples show how to use some of the most common functions</p>
+        <div id="find" class="section">
+          <h3>Find</h3>
+          <p>Get the descendants which match a given selector of the selected elements</p>
+          <h4>Example</h4>
+          <ul class="tabs" data-tabs id="example5-tabs">
+            <li class="tabs-title is-active"><a href="#result-example5" aria-selected="true">Result</a></li>
+            <li class="tabs-title"><a href="#html-example5">HTML</a></li>
+            <li class="tabs-title"><a href="#js-example5">JavaScript</a></li>
+          </ul>
+          <div class="tabs-content" data-tabs-content="example5-tabs">
+            <div class="tabs-panel is-active" id="result-example5">
+              <div class="example">
+<p><b>Change the color of the text of the level 3 using find</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
+              </div>
+            </div>
+            <div class="tabs-panel" id="html-example5">
+              <pre>
+                <code class="html">
+                </code>
+              </pre>
+            </div>
+            <div class="tabs-panel" id="js-example5">
+              <pre>
+                <code class="js">
+                </code>
+            </pre>
+            </div>
+          </div>
+            <script>
+(function () {
+  var $container = $('#find');
+
+  $container.find('.level3').css('color', 'red');
+})();
+            </script>
+          </div>
+          <div id="children" class="section">
+            <h3>Children</h3>
+            <p>Get the first level descendants which match a given selector of the selected elements</p>
+            <h4>Example</h4>
+            <ul class="tabs" data-tabs id="example6-tabs">
+              <li class="tabs-title is-active"><a href="#result-example6" aria-selected="true">Result</a></li>
+              <li class="tabs-title"><a href="#html-example6">HTML</a></li>
+              <li class="tabs-title"><a href="#js-example6">JavaScript</a></li>
+            </ul>
+            <div class="tabs-content" data-tabs-content="example6-tabs">
+              <div class="tabs-panel is-active" id="result-example6">
+                <div class="example">
+  <p><b>Change the color of the text of the level3 finding the level2 and getting their children</b></p>
+  <div class="level1">
+    <div class="level2">
+      <div class="level3">
+      Level 3
+      </div>
+    </div>
+    <div class="level2">
+      <div class="level3">
+      Level 3
+      </div>
+    </div>
+  </div>
+                </div>
+              </div>
+              <div class="tabs-panel" id="html-example6">
+                <pre>
+                  <code class="html">
+                  </code>
+                </pre>
+              </div>
+              <div class="tabs-panel" id="js-example6">
+                <pre>
+                  <code class="js">
+                  </code>
+              </pre>
+              </div>
+            </div>
+              <script>
+(function () {
+  var $container = $('#children .level2');
+
+  $container.children().css('color', 'red');
+})();
+              </script>
+            </div>
+            <div id="parents" class="section">
+              <h3>Parents</h3>
+              <p>Get the ancestors which match a given selector of the selected elements</p>
+              <h4>Example</h4>
+              <ul class="tabs" data-tabs id="example7-tabs">
+                <li class="tabs-title is-active"><a href="#result-example7" aria-selected="true">Result</a></li>
+                <li class="tabs-title"><a href="#html-example7">HTML</a></li>
+                <li class="tabs-title"><a href="#js-example7">JavaScript</a></li>
+              </ul>
+              <div class="tabs-content" data-tabs-content="example7-tabs">
+                <div class="tabs-panel is-active" id="result-example7">
+                  <div class="example">
+    <p><b>Change the color of the text of the level1 finding the level3 and getting their level1 ancestors</b></p>
+    <div class="level1">
+      Level 1
+      <div class="level2">
+        <div class="level3">
+        Level 3
+        </div>
+      </div>
+      <div class="level2">
+        <div class="level3">
+        Level 3
+        </div>
+      </div>
+    </div>
+                  </div>
+                </div>
+                <div class="tabs-panel" id="html-example7">
+                  <pre>
+                    <code class="html">
+                    </code>
+                  </pre>
+                </div>
+                <div class="tabs-panel" id="js-example7">
+                  <pre>
+                    <code class="js">
+                    </code>
+                </pre>
+                </div>
+              </div>
+                <script>
+  (function () {
+    var $container = $('#parents .level3');
+
+    $container.parents('.level1').css('color', 'red');
+  })();
+                </script>
+              </div>
+              <div id="each" class="section">
+                <h3>Each</h3>
+                <p>Iterate over the selected elements, executing a function for each matched element. Inside the function, the keyword "this" refers to the DOM element, if you want to work with the jQuery object of this element execute $(this). This function receives two parameters, the index of the element and the element (equals to this)</p>
+                <h4>Example</h4>
+                <ul class="tabs" data-tabs id="example7-tabs">
+                  <li class="tabs-title is-active"><a href="#result-example7" aria-selected="true">Result</a></li>
+                  <li class="tabs-title"><a href="#html-example7">HTML</a></li>
+                  <li class="tabs-title"><a href="#js-example7">JavaScript</a></li>
+                </ul>
+                <div class="tabs-content" data-tabs-content="example7-tabs">
+                  <div class="tabs-panel is-active" id="result-example7">
+                    <div class="example">
+      <p><b>Change the content of each element of the level3 with its position number</b></p>
+      <div class="level1">
+        Level 1
+        <div class="level2">
+          <div class="level3">
+          Level 3
+          </div>
+        </div>
+        <div class="level2">
+          <div class="level3">
+          Level 3
+          </div>
+        </div>
+      </div>
+                    </div>
+                  </div>
+                  <div class="tabs-panel" id="html-example7">
+                    <pre>
+                      <code class="html">
+                      </code>
+                    </pre>
+                  </div>
+                  <div class="tabs-panel" id="js-example7">
+                    <pre>
+                      <code class="js">
+                      </code>
+                  </pre>
+                  </div>
+                </div>
+                  <script>
+    (function () {
+      var $container = $('#each .level3');
+
+      $container.each(function (index, element) {
+        //this === element
+        var $element = $(this);
+
+        $element.text(index);
+      });
+    })();
+                  </script>
+                </div>
+      </div>
+      <div>
+        <h2 id="events" data-magellan-target="events">DOM Events</h2>
+      </div>
+      <div>
+        <h2 id="ajax" data-magellan-target="ajax">Ajax</h2>
+      </div>
+      <div>
+        <h2 id="resources" data-magellan-target="resources">Resources</h2>
+          <div id="tab-example" class="section">
+            <h3>Ex</h3>
+            <p>Ex</p>
+            <h4>Example</h4>
+            <ul class="tabs" data-tabs id="examplex-tabs">
+              <li class="tabs-title is-active"><a href="#result-examplex" aria-selected="true">Result</a></li>
+              <li class="tabs-title"><a href="#html-examplex">HTML</a></li>
+              <li class="tabs-title"><a href="#js-examplex">JavaScript</a></li>
+            </ul>
+            <div class="tabs-content" data-tabs-content="examplex-tabs">
+              <div class="tabs-panel is-active" id="result-examplex">
+                <div class="example">
+                </div>
+              </div>
+              <div class="tabs-panel" id="html-examplex">
+                <pre>
+                  <code class="html">
+                  </code>
+                </pre>
+              </div>
+              <div class="tabs-panel" id="js-examplex">
+                <pre>
+                  <code class="js">
+                  </code>
+              </pre>
+              </div>
+            </div>
+              <script>
+                (function () {
+
+                })();
+              </script>
+            </div>
+          </div>
+        <ul>
+        </ul>
+      </div>
+      <div class="large-2 columns show-for-large" data-sticky-container>
+        <nav class="columns sticky" data-sticky data-anchor="menu" data-sticky-on="large">
+          <ul class="vertical menu" data-magellan>
+              <li><a href="#selectors">Selectors</a></li>
+              <li><a href="#traversing">Traversing</a></li>
+              <li><a href="#events">DOM Events</a></li>
+              <li><a href="#ajax">Ajax</a></li>
+              <li><a href="#resources">Resources</a></li>
+            </ul>
+        </nav>
+      </div>
+    </div>
+  <script>
+    $(document).foundation();
+
+    $('.section').each(function () {
+      var $element = $(this);
+
+      $element.find('code.js').html($element.find('script').html());
+      $element.find('code.html').text($element.find('.example').html());
+    });
+  </script>
+</body>
+</html>
