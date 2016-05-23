@@ -24,8 +24,8 @@
     <div class="columns large-offset-2 large-8">
       <h1>jQuery Tips and Examples</h1>
       <div>
-        <h2 id="selectors" data-magellan-target="first">Selectors</h2>
-        <p>Jquery has a search engine which allows us make queries with CSS selectors to retrieve DOM elements. The following tips show how to use them properly.</p>
+        <h2 id="selectors" data-magellan-target="selectors">Selectors</h2>
+        <p>Jquery has a search engine which allows us to make queries with CSS selectors to retrieve DOM elements. The following tips show how to use them properly.</p>
           <div id="avoid-jquery-selectors"class="section">
             <h3>Avoid jQuery Selector Extensions</h3>
             <p><a href="https://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery Selector Extensions</a> cannot take advantage of the performance boost provided by the native querySelectorAll(). Try to use native css selectors if is possible. </p>
@@ -327,6 +327,9 @@
 })();
             </script>
           </div>
+
+
+
           <div id="children" class="section">
             <h3>Children</h3>
             <p>Get the first level descendants which match a given selector of the selected elements</p>
@@ -339,19 +342,19 @@
             <div class="tabs-content" data-tabs-content="example6-tabs">
               <div class="tabs-panel is-active" id="result-example6">
                 <div class="example">
-  <p><b>Change the color of the text of the level3 finding the level2 and getting their children</b></p>
-  <div class="level1">
-    <div class="level2">
-      <div class="level3">
-      Level 3
-      </div>
-    </div>
-    <div class="level2">
-      <div class="level3">
-      Level 3
-      </div>
+<p><b>Change the color of the text of the level3 finding the level2 and getting their children</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
     </div>
   </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                 </div>
               </div>
               <div class="tabs-panel" id="html-example6">
@@ -375,6 +378,9 @@
 })();
               </script>
             </div>
+
+
+
             <div id="parents" class="section">
               <h3>Parents</h3>
               <p>Get the ancestors which match a given selector of the selected elements</p>
@@ -424,9 +430,16 @@
   })();
                 </script>
               </div>
+
+
+
               <div id="each" class="section">
                 <h3>Each</h3>
-                <p>Iterate over the selected elements, executing a function for each matched element. Inside the function, the keyword "this" refers to the DOM element, if you want to work with the jQuery object of this element execute $(this). This function receives two parameters, the index of the element and the element (equals to this)</p>
+                <p>Iterate over the selected elements, executing a function for each matched element.</p>
+                <p>Inside the function, the keyword "this" refers to the DOM element, if you want to work with the jQuery object of this element execute $(this).
+                  This function receives two parameters, the index of the element and the element (equals to this).</p>
+                <p>Using each, avoid searching others DOM elements directly, try to find them relative to the current element (with functions like siblings, children, find, parent...).
+                  Use return false to break out of the loop early.</p>
                 <h4>Example</h4>
                 <ul class="tabs" data-tabs id="example7-tabs">
                   <li class="tabs-title is-active"><a href="#result-example7" aria-selected="true">Result</a></li>
@@ -436,20 +449,20 @@
                 <div class="tabs-content" data-tabs-content="example7-tabs">
                   <div class="tabs-panel is-active" id="result-example7">
                     <div class="example">
-      <p><b>Change the content of each element of the level3 with its position number</b></p>
-      <div class="level1">
-        Level 1
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-      </div>
+<p><b>Change the content of each element of the level3 with its position number</b></p>
+<div class="level1">
+  Level 1
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                     </div>
                   </div>
                   <div class="tabs-panel" id="html-example7">
@@ -466,21 +479,401 @@
                   </div>
                 </div>
                   <script>
+(function () {
+  var $container = $('#each .level3');
+
+  $container.each(function (index, element) {
+    //this === element
+    var $element = $(this);
+
+    $element.text(index);
+    //return false;  //Use return false to break out of the loop early
+  });
+})();
+                  </script>
+                </div>
+
+
+                <div id="traversing-documentation" class="section">
+                  <h3>Checkout out the documentation</h3>
+                  <p>jQuery has a lot of methods to traverse the DOM elements, before starting your task, check out the <a href="https://api.jquery.com/category/traversing/">documentation</a> to find the appropieate method</p>
+                  </div>
+      </div>
+
+
+
+      <div>
+        <h2 id="events" data-magellan-target="events">DOM Events</h2>
+        <p>jQuery can listen to DOM events (click, change, submit...) on elements and add or change behaviour.</p>
+
+
+        <div id="on-or-named" class="section">
+          <h3>"on" or "shortcut"?</h3>
+          <p>We have two ways to listen to events. The function jQueryObject.on() allow us to bind a handler to any kind of event.
+            Most of events have a named method which is a shortcut to the on listener, like click, change, focus, etc. There is no difference between these two methods (but on allow you to add a namespace to the event), use the method which suits you.</p>
+          <h4>Example</h4>
+          <ul class="tabs" data-tabs id="example8-tabs">
+            <li class="tabs-title is-active"><a href="#result-example8" aria-selected="true">Result</a></li>
+            <li class="tabs-title"><a href="#html-example8">HTML</a></li>
+            <li class="tabs-title"><a href="#js-example8">JavaScript</a></li>
+          </ul>
+          <div class="tabs-content" data-tabs-content="example8-tabs">
+            <div class="tabs-panel is-active" id="result-example8">
+              <div class="example">
+<p><b>Bind a handler to the click event of each button with "on" and click methods</b></p>
+<button type="button" class="button1 button">BUTTON 1</button>
+<button type="button" class="button2 button">BUTTON 2</button>
+              </div>
+            </div>
+            <div class="tabs-panel" id="html-example8">
+              <pre>
+                <code class="html">
+                </code>
+              </pre>
+            </div>
+            <div class="tabs-panel" id="js-example8">
+              <pre>
+                <code class="js">
+                </code>
+            </pre>
+            </div>
+          </div>
+            <script>
+(function () {
+  var $container = $('#on-or-named');
+
+  $container.find('.button1').on('click', function () {
+    alert('button 1');
+  });
+
+  $container.find('.button2').click(function () {
+    alert('button 2');
+  });
+})();
+            </script>
+          </div>
+
+
+          <div id="event-this" class="section">
+            <h3>This</h3>
+            <p>Like in other methods, in event handlers the keyword this refers to the current element, very useful when you have to do changes relative to that element.</p>
+            <h4>Example</h4>
+            <ul class="tabs" data-tabs id="example9-tabs">
+              <li class="tabs-title is-active"><a href="#result-example9" aria-selected="true">Result</a></li>
+              <li class="tabs-title"><a href="#html-example9">HTML</a></li>
+              <li class="tabs-title"><a href="#js-example9">JavaScript</a></li>
+            </ul>
+            <div class="tabs-content" data-tabs-content="example9-tabs">
+              <div class="tabs-panel is-active" id="result-example9">
+                <div class="example">
+<p><b>Bind a handler to the click event and change the text of the button</b></p>
+<button type="button" class="button1 button">BUTTON</button>
+                </div>
+              </div>
+              <div class="tabs-panel" id="html-example9">
+                <pre>
+                  <code class="html">
+                  </code>
+                </pre>
+              </div>
+              <div class="tabs-panel" id="js-example9">
+                <pre>
+                  <code class="js">
+                  </code>
+              </pre>
+              </div>
+            </div>
+              <script>
+(function () {
+  var $container = $('#event-this');
+
+  $container.find('.button1').on('click', function () {
+    $(this).text('CLICKED');
+  });
+})();
+              </script>
+            </div>
+
+
+            <div id="two-events" class="section">
+              <h3>Bind two different events</h3>
+              <p>You can bind an event handler to two different events in the same on method.</p>
+              <h4>Example</h4>
+              <ul class="tabs" data-tabs id="example10-tabs">
+                <li class="tabs-title is-active"><a href="#result-example10" aria-selected="true">Result</a></li>
+                <li class="tabs-title"><a href="#html-example10">HTML</a></li>
+                <li class="tabs-title"><a href="#js-example10">JavaScript</a></li>
+              </ul>
+              <div class="tabs-content" data-tabs-content="example10-tabs">
+                <div class="tabs-panel is-active" id="result-example10">
+                  <div class="example">
+  <p><b>Bind a handler to the click and change events of the input</b></p>
+  <input type="text" class="text"></button>
+                  </div>
+                </div>
+                <div class="tabs-panel" id="html-example10">
+                  <pre>
+                    <code class="html">
+                    </code>
+                  </pre>
+                </div>
+                <div class="tabs-panel" id="js-example10">
+                  <pre>
+                    <code class="js">
+                    </code>
+                </pre>
+                </div>
+              </div>
+                <script>
+  (function () {
+    var $container = $('#two-events');
+
+    $container.find('.text').on('click change', function () {
+      alert($(this).val());
+    });
+  })();
+                </script>
+              </div>
+
+
+              <div id="trigger" class="section">
+                <h3>Triggering custom events</h3>
+                <p>With the trigger method you can dispatch custom events from the DOM elements.</p>
+                <h4>Example</h4>
+                <ul class="tabs" data-tabs id="example11-tabs">
+                  <li class="tabs-title is-active"><a href="#result-example11" aria-selected="true">Result</a></li>
+                  <li class="tabs-title"><a href="#html-example11">HTML</a></li>
+                  <li class="tabs-title"><a href="#js-example11">JavaScript</a></li>
+                </ul>
+                <div class="tabs-content" data-tabs-content="example11-tabs">
+                  <div class="tabs-panel is-active" id="result-example11">
+                    <div class="example">
+    <p><b>Bind a handler to the change event of the input that trigger the stop event if the input has the word "stop" written inside. Listen to the custom event and show an alert.</b></p>
+    <input type="text" class="text"></button>
+                    </div>
+                  </div>
+                  <div class="tabs-panel" id="html-example11">
+                    <pre>
+                      <code class="html">
+                      </code>
+                    </pre>
+                  </div>
+                  <div class="tabs-panel" id="js-example11">
+                    <pre>
+                      <code class="js">
+                      </code>
+                  </pre>
+                  </div>
+                </div>
+                  <script>
     (function () {
-      var $container = $('#each .level3');
+      var $container = $('#trigger');
 
-      $container.each(function (index, element) {
-        //this === element
+      $container.find('.text').on('change', function () {
         var $element = $(this);
-
-        $element.text(index);
+        if ($element.val() === 'stop') {
+            $element.trigger('stop');
+        }
+      }).on('stop', function () {
+        alert('stop!');
       });
     })();
                   </script>
                 </div>
-      </div>
-      <div>
-        <h2 id="events" data-magellan-target="events">DOM Events</h2>
+
+
+                <div id="namespaces" class="section">
+                  <h3>Off and Namespaces</h3>
+                  <p>With the off method you can remove an attached event handler from an element. Namespaces are very useful to remove only the event handlers from a concrete event.
+                  The namespace of an event is defined in the on method, if you write "click.some-namespace" you are telling jQuery that this click event is of the "some-namespace" Namespace. </p>
+                  <h4>Example</h4>
+                  <ul class="tabs" data-tabs id="example12-tabs">
+                    <li class="tabs-title is-active"><a href="#result-example12" aria-selected="true">Result</a></li>
+                    <li class="tabs-title"><a href="#html-example12">HTML</a></li>
+                    <li class="tabs-title"><a href="#js-example12">JavaScript</a></li>
+                  </ul>
+                  <div class="tabs-content" data-tabs-content="example12-tabs">
+                    <div class="tabs-panel is-active" id="result-example12">
+                      <div class="example">
+<p><b>Bind a handler to the click event with a namespace of the button and remove only the first handler.</b></p>
+<button type="button" class="button1 button">BUTTON 1</button>
+                      </div>
+                    </div>
+                    <div class="tabs-panel" id="html-example12">
+                      <pre>
+                        <code class="html">
+                        </code>
+                      </pre>
+                    </div>
+                    <div class="tabs-panel" id="js-example12">
+                      <pre>
+                        <code class="js">
+                        </code>
+                    </pre>
+                    </div>
+                  </div>
+                    <script>
+(function () {
+  var $container = $('#namespaces');
+
+  $container.find('.button1').on('click.ns1', function () {
+    alert('first handler');
+  });
+
+  $container.find('.button1').on('click.ns2', function () {
+    alert('second handler');
+  });
+
+  $container.find('.button1').off('click.ns1');
+})();
+                    </script>
+                  </div>
+
+
+                  <div id="prevent-default" class="section">
+                    <h3>Preventing Default Action</h3>
+                    <p>In some cases, you may want to prevent the default action of some event, like submit a form or go to a link.
+                      All the event handlers are called with a parameter which has info and methods related to the event. One of these methods is preventDefault, which prevent the default action of the event.
+                      Returning false from an event handler will automatically call event.stopPropagation() and event.preventDefault().
+                    </p>
+                    <h4>Example</h4>
+                    <ul class="tabs" data-tabs id="example13-tabs">
+                      <li class="tabs-title is-active"><a href="#result-example13" aria-selected="true">Result</a></li>
+                      <li class="tabs-title"><a href="#html-example13">HTML</a></li>
+                      <li class="tabs-title"><a href="#js-example13">JavaScript</a></li>
+                    </ul>
+                    <div class="tabs-content" data-tabs-content="example13-tabs">
+                      <div class="tabs-panel is-active" id="result-example13">
+                        <div class="example">
+  <p><b>Prevent the anchor to go to the link.</b></p>
+  <a href="http://www.github.com" class="anchor">Github homepage</a>
+                        </div>
+                      </div>
+                      <div class="tabs-panel" id="html-example13">
+                        <pre>
+                          <code class="html">
+                          </code>
+                        </pre>
+                      </div>
+                      <div class="tabs-panel" id="js-example13">
+                        <pre>
+                          <code class="js">
+                          </code>
+                      </pre>
+                      </div>
+                    </div>
+                      <script>
+  (function () {
+    var $container = $('#prevent-default');
+
+    $container.find('.anchor').on('click', function (event) {
+      event.preventDefault();
+    });
+  })();
+                      </script>
+                    </div>
+
+
+                    <div id="stop-propagation" class="section">
+                      <h3>Preventing Event from bubbling up</h3>
+                      <p>By default, a DOM event bubbles up from the element which triggers the event to its ancestors. Event.stopPropagation prevent the event from bubbling.
+                      Returning false from an event handler will automatically call event.stopPropagation() and event.preventDefault(). </p>
+                      <h4>Example</h4>
+                      <ul class="tabs" data-tabs id="example14-tabs">
+                        <li class="tabs-title is-active"><a href="#result-example14" aria-selected="true">Result</a></li>
+                        <li class="tabs-title"><a href="#html-example14">HTML</a></li>
+                        <li class="tabs-title"><a href="#js-example14">JavaScript</a></li>
+                      </ul>
+                      <div class="tabs-content" data-tabs-content="example14-tabs">
+                        <div class="tabs-panel is-active" id="result-example14">
+                          <div class="example">
+<p><b>Bind an event handler to the click of the button-container, but prevent the bubbling from the button click.</b></p>
+<div class="button-container">
+  <button type="button" class="button1 button">BUTTON 1</button>
+  <button type="button" class="button2 button">BUTTON 2</button>
+</div>
+                          </div>
+                        </div>
+                        <div class="tabs-panel" id="html-example14">
+                          <pre>
+                            <code class="html">
+                            </code>
+                          </pre>
+                        </div>
+                        <div class="tabs-panel" id="js-example14">
+                          <pre>
+                            <code class="js">
+                            </code>
+                        </pre>
+                        </div>
+                      </div>
+                        <script>
+(function () {
+  var $container = $('#stop-propagation');
+
+  $container.find('.button-container').on('click', function () {
+    alert('container');
+  });
+
+  $container.find('.button1').on('click', function (event) {
+    event.stopPropagation();
+  });
+})();
+                        </script>
+                      </div>
+
+
+                      <div id="stop-immediate-propagation" class="section">
+                        <h3>Keeping rest of the handlers from being executed</h3>
+                        <p>If an element has more than one event handler attached and you want that sometimes
+                          one of the handlers keeps the rest of the handlers from being executed you have to use Event.stopImmediatePropagation.
+                        This method prevents also the event from bubbling up. Note that handlers bound to an element are called in the same order that they were bound.</p>
+                        <h4>Example</h4>
+                        <ul class="tabs" data-tabs id="example15-tabs">
+                          <li class="tabs-title is-active"><a href="#result-example15" aria-selected="true">Result</a></li>
+                          <li class="tabs-title"><a href="#html-example15">HTML</a></li>
+                          <li class="tabs-title"><a href="#js-example15">JavaScript</a></li>
+                        </ul>
+                        <div class="tabs-content" data-tabs-content="example15-tabs">
+                          <div class="tabs-panel is-active" id="result-example15">
+                            <div class="example">
+  <p><b>Bind two event handler to the click of button and stop the event propagation in the first event handler.</b></p>
+  <div class="button-container">
+    <button type="button" class="button1 button">BUTTON 1</button>
+  </div>
+                            </div>
+                          </div>
+                          <div class="tabs-panel" id="html-example15">
+                            <pre>
+                              <code class="html">
+                              </code>
+                            </pre>
+                          </div>
+                          <div class="tabs-panel" id="js-example15">
+                            <pre>
+                              <code class="js">
+                              </code>
+                          </pre>
+                          </div>
+                        </div>
+                          <script>
+  (function () {
+    var $container = $('#stop-immediate-propagation');
+
+    $container.find('.button-container').on('click', function () {
+      alert('container');
+    });
+
+    $container.find('.button1').on('click', function (event) {
+      event.stopImmediatePropagation();
+    });
+
+    $container.find('.button1').on('click', function (event) {
+      alert('second handler!');
+    });
+  })();
+                          </script>
+                        </div>
       </div>
       <div>
         <h2 id="ajax" data-magellan-target="ajax">Ajax</h2>
