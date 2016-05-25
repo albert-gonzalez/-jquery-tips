@@ -25,7 +25,7 @@ https://albert-gonzalez.github.io/jquery-tips
  * [This](https://albert-gonzalez.github.io/jquery-tips#event-this)
  * [Binding multiple events](https://albert-gonzalez.github.io/jquery-tips#two-events)
  * [Triggering custom events](https://albert-gonzalez.github.io/jquery-tips#trigger)
- * [Off and Namespaces](https://albert-gonzalez.github.io/jquery-tips#namespaces)
+ * [off() and Namespaces](https://albert-gonzalez.github.io/jquery-tips#namespaces)
  * [Preventing Default Action](https://albert-gonzalez.github.io/jquery-tips#prevent-default)
  * [Preventing Event from bubbling up](https://albert-gonzalez.github.io/jquery-tips#stop-propagation)
  * [Keeping rest of the handlers from being executed](https://albert-gonzalez.github.io/jquery-tips#stop-immediate-propagation)
