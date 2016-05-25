@@ -23,7 +23,7 @@ https://albert-gonzalez.github.io/jquery-tips
 * [DOM Events](https://albert-gonzalez.github.io/jquery-tips#events)
  * [on() vs. "shortcut"?](https://albert-gonzalez.github.io/jquery-tips#on-or-named)
  * [This](https://albert-gonzalez.github.io/jquery-tips#event-this)
- * [Binding two different events](https://albert-gonzalez.github.io/jquery-tips#two-events)
+ * [Binding multiple events](https://albert-gonzalez.github.io/jquery-tips#two-events)
  * [Triggering custom events](https://albert-gonzalez.github.io/jquery-tips#trigger)
  * [Off and Namespaces](https://albert-gonzalez.github.io/jquery-tips#namespaces)
  * [Preventing Default Action](https://albert-gonzalez.github.io/jquery-tips#prevent-default)

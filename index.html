@@ -524,7 +524,7 @@
                       <p>Iterate over the selected elements, executing a function for each matched element.</p>
                       <p>Inside the function, the keyword "this" refers to the DOM element, if you want to work with the jQuery object of this element execute $(this).
                         This function receives two parameters, the index of the element and the element (equals to this).</p>
-                      <p>Using each, avoid searching others DOM elements directly, try to find them relative to the current element (with functions like siblings, children, find, parent...).
+                      <p>Using each, avoid searching others DOM elements directly, try to find them relative to the current element (with functions like siblings(), children(), find(), parents()...).
                         Use return false to break out of the loop early.</p>
                       <h4>Example</h4>
                       <ul class="tabs" data-tabs id="example16-tabs">
@@ -596,7 +596,7 @@
               <div id="on-or-named" class="section">
                 <h3>on() vs. "shortcut"?</h3>
                 <p>We have two ways to listen to events. The function jQueryObject.on() allow us to bind a handler to any kind of event.
-                  Most of events have a named method which is a shortcut to the on listener, like click, change, focus, etc. There is no difference between these two methods (but on allow you to add a namespace to the event), use the method which suits you.</p>
+                  Most of events have a named method which is a shortcut to the on listener, like click(), change(), focus(), etc. There is no difference between these two methods (but on() allow you to add a namespace to the event), use the method which suits you.</p>
                 <h4>Example</h4>
                 <ul class="tabs" data-tabs id="example8-tabs">
                   <li class="tabs-title is-active"><a href="#result-example8" aria-selected="true">Result</a></li>
@@ -682,8 +682,8 @@
 
 
                   <div id="two-events" class="section">
-                    <h3>Binding two different events</h3>
-                    <p>You can bind an event handler to two different events in the same on method.</p>
+                    <h3>Binding multiple events</h3>
+                    <p>You can bind an event handler to two or more different events in the same on method.</p>
                     <h4>Example</h4>
                     <ul class="tabs" data-tabs id="example10-tabs">
                       <li class="tabs-title is-active"><a href="#result-example10" aria-selected="true">Result</a></li>
@@ -724,7 +724,7 @@
 
                     <div id="trigger" class="section">
                       <h3>Triggering custom events</h3>
-                      <p>With the trigger method you can dispatch custom events from the DOM elements.</p>
+                      <p>With the trigger method you can dispatch custom events from the DOM elements. An array of arguments or a object can also be passed to the trigger() call, and these parameters will be passed along to the handler as well following the event object.</p>
                       <h4>Example</h4>
                       <ul class="tabs" data-tabs id="example11-tabs">
                         <li class="tabs-title is-active"><a href="#result-example11" aria-selected="true">Result</a></li>
@@ -734,7 +734,7 @@
                       <div class="tabs-content" data-tabs-content="example11-tabs">
                         <div class="tabs-panel is-active" id="result-example11">
                           <div class="example">
-<p><b>Bind a handler to the change event of the input that trigger the stop event if the input has the word "stop" written inside. Listen to the custom event and show an alert.</b></p>
+<p><b>Bind a handler to the change event of the input that trigger the stop event (passing the input's value as parameter) if the input has the word "stop" written inside. Listen to the custom event and show an alert.</b></p>
 <input type="text" class="text"></button>
                           </div>
                         </div>
@@ -758,10 +758,10 @@
   $container.find('.text').on('change', function () {
     var $element = $(this);
     if ($element.val() === 'stop') {
-        $element.trigger('my-stop-event');
+        $element.trigger('my-stop-event', $element.val());
     }
-  }).on('my-stop-event', function () {
-    alert('stop!');
+  }).on('my-stop-event', function (e, value) {
+    alert('stop! input value: ' + value);
   });
 })();
                         </script>
@@ -1014,7 +1014,7 @@
 
                 <div id="ajax-serialize" class="section">
                   <h3>Serializing a form</h3>
-                  <p>If you need to submit a form using ajax, the serialize and serializeArray methods can help you in this task.</p>
+                  <p>If you need to submit a form using ajax, the serialize and serializeArray methods can help you with this task.</p>
                   <h4>Example</h4>
                   <ul class="tabs" data-tabs id="example18-tabs">
                     <li class="tabs-title is-active"><a href="#result-example18" aria-selected="true">Result</a></li>
