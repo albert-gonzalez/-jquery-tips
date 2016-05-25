@@ -1,7 +1,8 @@
 <html>
 <head>
-  <title>Jquery Tips</title>
+  <title>Jquery Tips and Examples</title>
   <meta name="description" content="Useful jQuery Tips and Information" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="node_modules/foundation-sites/dist/foundation.min.css" />
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/default.min.css" />
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -17,12 +18,18 @@
       background: #2199e8;
       color: white;
     }
+
+    .footer {
+      margin-top: 3em;
+      padding-top: 1em;
+      border-top: 1px solid black;
+    }
   </style>
 </head>
 <body>
   <div class="off-canvas-wrapper">
     <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-      <div class="off-canvas position-left" id="offCanvas" data-off-canvas style="height:100%;">
+      <div class="off-canvas position-left black" id="offCanvas" data-off-canvas style="height:100%;">
         <!-- Menu -->
         <ul class="vertical menu left-menu">
 
@@ -32,7 +39,7 @@
 
       <div class="off-canvas-content" data-off-canvas-content>
         <div data-sticky-container>
-        <div class="title-bar dark" data-sticky data-options="marginTop:0;" style="width:100%;height:2em">
+        <div class="title-bar dark" data-sticky data-options="marginTop:0;" style="width:100%;height:2em" data-sticky-on="small">
           <button type="button" class="menu-icon white" data-toggle="offCanvas"></button>
         </div>
         </div>
@@ -42,7 +49,7 @@
             <div>
               <h2 id="selectors" data-magellan-target="selectors">Selectors</h2>
               <p>Jquery has a search engine which allows us to make queries with CSS selectors to retrieve DOM elements. The following tips show how to use them properly.</p>
-              <p><strong>Reference: </strong><a href="http://api.jquery.com/category/selectors/">jQuery Event Documentation</a></p>
+              <p><strong>Reference: </strong><a href="http://api.jquery.com/category/selectors/">jQuery Selectors Documentation</a></p>
 
                 <div id="avoid-jquery-selectors" class="section">
                   <h3>Avoid jQuery Selector Extensions</h3>
@@ -56,10 +63,11 @@
                   <div class="tabs-content" data-tabs-content="example1-tabs">
                     <div class="tabs-panel is-active" id="result-example1">
                       <div class="example">
-      <button class="button">button</button>
+<p><b>Comparison</b></p>
+<button class="button">button</button>
 
-      <div> Time with :button in 10000 iterations: <span class="iteration1"></span></div>
-      <div> Time with css selector in 10000 iterations: <span class="iteration2"></span></div>
+<div> Time with :button in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with css selector in 10000 iterations: <span class="iteration2"></span></div>
                       </div>
                     </div>
                     <div class="tabs-panel" id="html-example1">
@@ -76,24 +84,24 @@
                     </div>
                   </div>
                     <script>
-      (function () {
-        var i, startTime, endTime, timeDiff, $container = $('#avoid-jquery-selectors');
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#avoid-jquery-selectors');
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example :button');
-        }
-        endTime = new Date();
-        $container.find('.iteration1').html((endTime - startTime)/1000);
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example :button');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example button, .example input[type="button"]');
-        }
-        endTime = new Date();
-        $container.find('.iteration2').html((endTime - startTime)/1000);
-      })();
-                    </script>
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example button, .example input[type="button"]');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
+              </script>
                   </div>
 
 
@@ -109,21 +117,22 @@
                     <div class="tabs-content" data-tabs-content="example2-tabs">
                       <div class="tabs-panel is-active" id="result-example2">
                         <div class="example">
-        <div class="level1">
-          <div class="level2">
-            <div class="level3">
-              Level 3
-            </div>
-          </div>
-          <div class="level2">
-            <div class="level3">
-              Level 3
-            </div>
-          </div>
-        </div>
+<p><b>Comparison</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+      Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+      Level 3
+    </div>
+  </div>
+</div>
 
-        <div> Time with '.example div.level1 div.level2 div.level3' in 10000 iterations: <span class="iteration1"></span></div>
-        <div> Time with '.example .level3' in 10000 iterations: <span class="iteration2"></span></div>
+<div> Time with '.example div.level1 div.level2 div.level3' in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with '.example .level3' in 10000 iterations: <span class="iteration2"></span></div>
                         </div>
                       </div>
                       <div class="tabs-panel" id="html-example2">
@@ -140,23 +149,23 @@
                       </div>
                     </div>
                       <script>
-      (function () {
-        var i, startTime, endTime, timeDiff, $container = $('#excessive-specificity');
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#excessive-specificity');
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example div.level1 div.level2 div.level3');
-        }
-        endTime = new Date();
-        $container.find('.iteration1').html((endTime - startTime)/1000);
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level2 div.level3');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example .level3');
-        }
-        endTime = new Date();
-        $container.find('.iteration2').html((endTime - startTime)/1000);
-      })();
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example .level3');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
                       </script>
                     </div>
 
@@ -173,21 +182,22 @@
                         <div class="tabs-content" data-tabs-content="example3-tabs">
                           <div class="tabs-panel is-active" id="result-example3">
                             <div class="example">
-      <div class="level1">
-        <div class="level2">
-            <div class="level3">
-              Level 3
-            </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-            Level 3
-          </div>
-        </div>
+<p><b>Comparison</b></p>
+<div class="level1">
+  <div class="level2">
+      <div class="level3">
+        Level 3
       </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+      Level 3
+    </div>
+  </div>
+</div>
 
-      <div> Time with repeated selector in 10000 iterations: <span class="iteration1"></span></div>
-      <div> Time with saved selector in 10000 iterations: <span class="iteration2"></span></div>
+<div> Time with repeated selector in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with saved selector in 10000 iterations: <span class="iteration2"></span></div>
                             </div>
                           </div>
                           <div class="tabs-panel" id="html-example3">
@@ -204,24 +214,24 @@
                           </div>
                         </div>
                           <script>
-      (function () {
-        var i, startTime, endTime, timeDiff, $container = $('#id-save-queries');
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#id-save-queries');
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example div.level1 div.level2 div.level3').html($container.find('.example div.level1 div.level2 div.level3').html());
-        }
-        endTime = new Date();
-        $container.find('.iteration1').html((endTime - startTime)/1000);
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level2 div.level3').html($container.find('.example div.level1 div.level2 div.level3').html());
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
 
-        startTime = new Date();
-        var $element = $container.find('.example div.level1 div.level2 div.level3');
-        for (i = 0; i < 10000; i++) {
-          $element.html($element.html());
-        }
-        endTime = new Date();
-        $container.find('.iteration2').html((endTime - startTime)/1000);
-      })();
+  startTime = new Date();
+  var $element = $container.find('.example div.level1 div.level2 div.level3');
+  for (i = 0; i < 10000; i++) {
+    $element.html($element.html());
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
                           </script>
                         </div>
 
@@ -237,21 +247,22 @@
                           <div class="tabs-content" data-tabs-content="example4-tabs">
                             <div class="tabs-panel is-active" id="result-example4">
                               <div class="example">
-      <div class="level1">
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-      </div>
+<p><b>Comparison</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
 
-      <div> Time with repeated container in 10000 iterations: <span class="iteration1"></span></div>
-      <div> Time with saved container in 10000 iterations: <span class="iteration2"></span></div>
+<div> Time with repeated container in 10000 iterations: <span class="iteration1"></span></div>
+<div> Time with saved container in 10000 iterations: <span class="iteration2"></span></div>
                               </div>
                             </div>
                             <div class="tabs-panel" id="html-example4">
@@ -268,40 +279,95 @@
                             </div>
                           </div>
                             <script>
-      (function () {
-        var i, startTime, endTime, timeDiff, $container = $('#id-save-container');
+(function () {
+  var i, startTime, endTime, timeDiff, $container = $('#id-save-container');
 
-        startTime = new Date();
-        for (i = 0; i < 10000; i++) {
-          $container.find('.example div.level1 div.level3:first-child');
-          $container.find('.example div.level1 div.level3:last-child');
-        }
-        endTime = new Date();
-        $container.find('.iteration1').html((endTime - startTime)/1000);
+  startTime = new Date();
+  for (i = 0; i < 10000; i++) {
+    $container.find('.example div.level1 div.level3:first-child');
+    $container.find('.example div.level1 div.level3:last-child');
+  }
+  endTime = new Date();
+  $container.find('.iteration1').html((endTime - startTime)/1000);
 
-        startTime = new Date();
-        var $element = $container.find('.example div.level1');
-        for (i = 0; i < 10000; i++) {
-          $element.find('div.level3:first-child');
-          $element.find('div.level3:last-child');
-        }
-        endTime = new Date();
-        $container.find('.iteration2').html((endTime - startTime)/1000);
-      })();
+  startTime = new Date();
+  var $element = $container.find('.example div.level1');
+  for (i = 0; i < 10000; i++) {
+    $element.find('div.level3:first-child');
+    $element.find('div.level3:last-child');
+  }
+  endTime = new Date();
+  $container.find('.iteration2').html((endTime - startTime)/1000);
+})();
                             </script>
                           </div>
           </div>
+
+
+          <div>
+            <h2 id="manipulation" data-magellan-target="manipulation">Manipulation</h2>
+            <p>With jQuery is very easy to retrieve info from the elements of the DOM and manipulate it.</p>
+            <p><strong>Reference: </strong><a href="http://api.jquery.com/category/manipulation/">jQuery Manipulation Documentation</a></p>
+
+            <div id="prop-vs-attr" class="section">
+              <h3>prop() vs. attr()</h3>
+              <p>The method prop() and the method attr() are very similar, but they have some important differences.</p>
+              <p>prop() gets the value of a property for the first element in selected elements or set one or more properties for every selected element.
+            This method can return any kind of value (for example boolean for the "checked" property). attr() does the same but for attributes, and always returns a String (except for a few attributes).</p>
+            <p>A lot of properties have corresponding attributes, but sometimes an attribute and a property with the same name don't have the same value, like checked, selected or disabled, the property is the current state, and the attribute is the default state.</p>
+              <h4>Example</h4>
+              <ul class="tabs" data-tabs id="example20-tabs">
+                <li class="tabs-title is-active"><a href="#result-example20" aria-selected="true">Result</a></li>
+                <li class="tabs-title"><a href="#html-example20">HTML</a></li>
+                <li class="tabs-title"><a href="#js-example20">JavaScript</a></li>
+              </ul>
+              <div class="tabs-content" data-tabs-content="example20-tabs">
+                <div class="tabs-panel is-active" id="result-example20">
+                  <div class="example">
+<p><b>The checkbox must show an alert with its checked property and attribute on change.</b></p>
+<label><input type="checkbox" class="checkbox1" checked/>Checkbox 1</label>
+                  </div>
+                </div>
+                <div class="tabs-panel" id="html-example20">
+                  <pre>
+                    <code class="html">
+                    </code>
+                  </pre>
+                </div>
+                <div class="tabs-panel" id="js-example20">
+                  <pre>
+                    <code class="js">
+                    </code>
+                </pre>
+                </div>
+              </div>
+                <script>
+(function () {
+  var $container = $('#prop-vs-attr');
+
+  $container.find('.checkbox1').on('change', function () {
+    alert('property: ' + $(this).prop('checked') + '      attribute: ' + $(this).attr('checked'));
+  })
+})();
+                </script>
+              </div>
+            </div>
+
+
+            <div id="manipulation-documentation" class="section">
+              <h3>Read the documentation</h3>
+              <p>jQuery has a lot of methods to manipulate the DOM (addClass(), append(), html(), css(), empty(), val(), attr(), prop()...), before starting your task, check out the <a href="https://api.jquery.com/category/manipulation/">documentation</a> to find the appropieate method.</p></h3>
+          </div>
+
+
             <div>
-
-
-
               <h2 id="traversing" data-magellan-target="traversing">Traversing</h2>
-              <p>We can traverse the dom elements very easily using the useful jQuery traversing functions. The following examples show how to use some of the most common functions</p>
+              <p>We can traverse the dom elements very easily using the useful jQuery traversing functions. The following examples show how to use some of the most common functions.</p>
               <p><strong>Reference: </strong><a href="http://api.jquery.com/category/traversing/">jQuery Traversing Documentation</a></p>
 
               <div id="find" class="section">
                 <h3>Find</h3>
-                <p>Get the descendants which match a given selector of the selected elements</p>
+                <p>Get the descendants which match a given selector of the selected elements.</p>
                 <h4>Example</h4>
                 <ul class="tabs" data-tabs id="example5-tabs">
                   <li class="tabs-title is-active"><a href="#result-example5" aria-selected="true">Result</a></li>
@@ -311,19 +377,19 @@
                 <div class="tabs-content" data-tabs-content="example5-tabs">
                   <div class="tabs-panel is-active" id="result-example5">
                     <div class="example">
-      <p><b>Change the color of the text of the level 3 using find</b></p>
-      <div class="level1">
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-      </div>
+<p><b>Change the color of the text of the level 3 using find.</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                     </div>
                   </div>
                   <div class="tabs-panel" id="html-example5">
@@ -340,11 +406,11 @@
                   </div>
                 </div>
                   <script>
-      (function () {
-        var $container = $('#find');
+(function () {
+  var $container = $('#find');
 
-        $container.find('.level3').css('color', 'red');
-      })();
+  $container.find('.level3').css('color', 'red');
+})();
                   </script>
                 </div>
 
@@ -352,7 +418,7 @@
 
                 <div id="children" class="section">
                   <h3>Children</h3>
-                  <p>Get the first level descendants which match a given selector of the selected elements</p>
+                  <p>Get the first level descendants which match a given selector of the selected elements.</p>
                   <h4>Example</h4>
                   <ul class="tabs" data-tabs id="example6-tabs">
                     <li class="tabs-title is-active"><a href="#result-example6" aria-selected="true">Result</a></li>
@@ -362,19 +428,19 @@
                   <div class="tabs-content" data-tabs-content="example6-tabs">
                     <div class="tabs-panel is-active" id="result-example6">
                       <div class="example">
-      <p><b>Change the color of the text of the level3 finding the level2 and getting their children</b></p>
-      <div class="level1">
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-      </div>
+<p><b>Change the color of the text of the level3 finding the level2 and getting their children.</b></p>
+<div class="level1">
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                       </div>
                     </div>
                     <div class="tabs-panel" id="html-example6">
@@ -391,11 +457,11 @@
                     </div>
                   </div>
                     <script>
-      (function () {
-        var $container = $('#children .level2');
+(function () {
+  var $container = $('#children .level2');
 
-        $container.children().css('color', 'red');
-      })();
+  $container.children().css('color', 'red');
+})();
                     </script>
                   </div>
 
@@ -403,7 +469,7 @@
 
                   <div id="parents" class="section">
                     <h3>Parents</h3>
-                    <p>Get the ancestors which match a given selector of the selected elements</p>
+                    <p>Get the ancestors which match a given selector of the selected elements.</p>
                     <h4>Example</h4>
                     <ul class="tabs" data-tabs id="example7-tabs">
                       <li class="tabs-title is-active"><a href="#result-example7" aria-selected="true">Result</a></li>
@@ -413,20 +479,20 @@
                     <div class="tabs-content" data-tabs-content="example7-tabs">
                       <div class="tabs-panel is-active" id="result-example7">
                         <div class="example">
-          <p><b>Change the color of the text of the level1 finding the level3 and getting their level1 ancestors</b></p>
-          <div class="level1">
-            Level 1
-            <div class="level2">
-              <div class="level3">
-              Level 3
-              </div>
-            </div>
-            <div class="level2">
-              <div class="level3">
-              Level 3
-              </div>
-            </div>
-          </div>
+<p><b>Change the color of the text of the level1 finding the level3 and getting their level1 ancestors.</b></p>
+<div class="level1">
+  Level 1
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                         </div>
                       </div>
                       <div class="tabs-panel" id="html-example7">
@@ -443,11 +509,11 @@
                       </div>
                     </div>
                       <script>
-        (function () {
-          var $container = $('#parents .level3');
+(function () {
+  var $container = $('#parents .level3');
 
-          $container.parents('.level1').css('color', 'red');
-        })();
+  $container.parents('.level1').css('color', 'red');
+})();
                       </script>
                     </div>
 
@@ -469,20 +535,20 @@
                       <div class="tabs-content" data-tabs-content="example16-tabs">
                         <div class="tabs-panel is-active" id="result-example16">
                           <div class="example">
-      <p><b>Change the content of each element of the level3 with its position number</b></p>
-      <div class="level1">
-        Level 1
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-        <div class="level2">
-          <div class="level3">
-          Level 3
-          </div>
-        </div>
-      </div>
+<p><b>Change the content of each element of the level3 with its position number.</b></p>
+<div class="level1">
+  Level 1
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+  <div class="level2">
+    <div class="level3">
+    Level 3
+    </div>
+  </div>
+</div>
                           </div>
                         </div>
                         <div class="tabs-panel" id="html-example16">
@@ -499,24 +565,24 @@
                         </div>
                       </div>
                         <script>
-      (function () {
-        var $container = $('#each .level3');
+(function () {
+  var $container = $('#each .level3');
 
-        $container.each(function (index, element) {
-          //this === element
-          var $element = $(this);
+  $container.each(function (index, element) {
+    //this === element
+    var $element = $(this);
 
-          $element.text(index);
-          //return false;  //Use return false to break out of the loop early
-        });
-      })();
+    $element.text(index);
+    //return false;  //Use return false to break out of the loop early
+  });
+})();
                         </script>
                       </div>
 
 
                       <div id="traversing-documentation" class="section">
-                        <h3>Checkout out the documentation</h3>
-                        <p>jQuery has a lot of methods to traverse the DOM elements, before starting your task, check out the <a href="https://api.jquery.com/category/traversing/">documentation</a> to find the appropieate method</p>
+                        <h3>Read the documentation</h3>
+                        <p>jQuery has a lot of methods to traverse the DOM elements, before starting your task, check out the <a href="https://api.jquery.com/category/traversing/">documentation</a> to find the appropieate method.</p>
                         </div>
             </div>
 
@@ -528,7 +594,7 @@
               <p><strong>Reference: </strong><a href="http://api.jquery.com/category/events/">jQuery Event Documentation</a></p>
 
               <div id="on-or-named" class="section">
-                <h3>"on" or "shortcut"?</h3>
+                <h3>on() vs. "shortcut"?</h3>
                 <p>We have two ways to listen to events. The function jQueryObject.on() allow us to bind a handler to any kind of event.
                   Most of events have a named method which is a shortcut to the on listener, like click, change, focus, etc. There is no difference between these two methods (but on allow you to add a namespace to the event), use the method which suits you.</p>
                 <h4>Example</h4>
@@ -540,9 +606,9 @@
                 <div class="tabs-content" data-tabs-content="example8-tabs">
                   <div class="tabs-panel is-active" id="result-example8">
                     <div class="example">
-      <p><b>Bind a handler to the click event of each button with "on" and click methods</b></p>
-      <button type="button" class="button1 button">BUTTON 1</button>
-      <button type="button" class="button2 button">BUTTON 2</button>
+<p><b>Bind a handler to the click event of each button with on() and click() methods.</b></p>
+<button type="button" class="button1 button">BUTTON 1</button>
+<button type="button" class="button2 button">BUTTON 2</button>
                     </div>
                   </div>
                   <div class="tabs-panel" id="html-example8">
@@ -559,17 +625,17 @@
                   </div>
                 </div>
                   <script>
-      (function () {
-        var $container = $('#on-or-named');
+(function () {
+  var $container = $('#on-or-named');
 
-        $container.find('.button1').on('click', function () {
-          alert('button 1');
-        });
+  $container.find('.button1').on('click', function () {
+    alert('button 1');
+  });
 
-        $container.find('.button2').click(function () {
-          alert('button 2');
-        });
-      })();
+  $container.find('.button2').click(function () {
+    alert('button 2');
+  });
+})();
                   </script>
                 </div>
 
@@ -586,8 +652,8 @@
                   <div class="tabs-content" data-tabs-content="example9-tabs">
                     <div class="tabs-panel is-active" id="result-example9">
                       <div class="example">
-      <p><b>Bind a handler to the click event and change the text of the button</b></p>
-      <button type="button" class="button1 button">BUTTON</button>
+<p><b>Bind a handler to the click event and change the text of the button</b></p>
+<button type="button" class="button1 button">BUTTON</button>
                       </div>
                     </div>
                     <div class="tabs-panel" id="html-example9">
@@ -604,13 +670,13 @@
                     </div>
                   </div>
                     <script>
-      (function () {
-        var $container = $('#event-this');
+(function () {
+  var $container = $('#event-this');
 
-        $container.find('.button1').on('click', function () {
-          $(this).text('CLICKED');
-        });
-      })();
+  $container.find('.button1').on('click', function () {
+    $(this).text('CLICKED');
+  });
+})();
                     </script>
                   </div>
 
@@ -627,8 +693,8 @@
                     <div class="tabs-content" data-tabs-content="example10-tabs">
                       <div class="tabs-panel is-active" id="result-example10">
                         <div class="example">
-        <p><b>Bind a handler to the click and change events of the input</b></p>
-        <input type="text" class="text"></button>
+<p><b>Bind a handler to the click and change events of the input.</b></p>
+<input type="text" class="text"></button>
                         </div>
                       </div>
                       <div class="tabs-panel" id="html-example10">
@@ -645,13 +711,13 @@
                       </div>
                     </div>
                       <script>
-        (function () {
-          var $container = $('#two-events');
+(function () {
+  var $container = $('#two-events');
 
-          $container.find('.text').on('click change', function () {
-            alert($(this).val());
-          });
-        })();
+  $container.find('.text').on('click change', function () {
+    alert($(this).val());
+  });
+})();
                       </script>
                     </div>
 
@@ -668,8 +734,8 @@
                       <div class="tabs-content" data-tabs-content="example11-tabs">
                         <div class="tabs-panel is-active" id="result-example11">
                           <div class="example">
-          <p><b>Bind a handler to the change event of the input that trigger the stop event if the input has the word "stop" written inside. Listen to the custom event and show an alert.</b></p>
-          <input type="text" class="text"></button>
+<p><b>Bind a handler to the change event of the input that trigger the stop event if the input has the word "stop" written inside. Listen to the custom event and show an alert.</b></p>
+<input type="text" class="text"></button>
                           </div>
                         </div>
                         <div class="tabs-panel" id="html-example11">
@@ -686,18 +752,18 @@
                         </div>
                       </div>
                         <script>
-          (function () {
-            var $container = $('#trigger');
+(function () {
+  var $container = $('#trigger');
 
-            $container.find('.text').on('change', function () {
-              var $element = $(this);
-              if ($element.val() === 'stop') {
-                  $element.trigger('stop');
-              }
-            }).on('stop', function () {
-              alert('stop!');
-            });
-          })();
+  $container.find('.text').on('change', function () {
+    var $element = $(this);
+    if ($element.val() === 'stop') {
+        $element.trigger('my-stop-event');
+    }
+  }).on('my-stop-event', function () {
+    alert('stop!');
+  });
+})();
                         </script>
                       </div>
 
@@ -715,8 +781,8 @@
                         <div class="tabs-content" data-tabs-content="example12-tabs">
                           <div class="tabs-panel is-active" id="result-example12">
                             <div class="example">
-      <p><b>Bind a handler to the click event with a namespace of the button and remove only the first handler.</b></p>
-      <button type="button" class="button1 button">BUTTON 1</button>
+<p><b>Bind a handler to the click event with a namespace of the button and remove only the first handler.</b></p>
+<button type="button" class="button1 button">BUTTON 1</button>
                             </div>
                           </div>
                           <div class="tabs-panel" id="html-example12">
@@ -733,19 +799,19 @@
                           </div>
                         </div>
                           <script>
-      (function () {
-        var $container = $('#namespaces');
+(function () {
+  var $container = $('#namespaces');
 
-        $container.find('.button1').on('click.ns1', function () {
-          alert('first handler');
-        });
+  $container.find('.button1').on('click.ns1', function () {
+    alert('first handler');
+  });
 
-        $container.find('.button1').on('click.ns2', function () {
-          alert('second handler');
-        });
+  $container.find('.button1').on('click.ns2', function () {
+    alert('second handler');
+  });
 
-        $container.find('.button1').off('click.ns1');
-      })();
+  $container.find('.button1').off('click.ns1');
+})();
                           </script>
                         </div>
 
@@ -753,7 +819,7 @@
                         <div id="prevent-default" class="section">
                           <h3>Preventing Default Action</h3>
                           <p>In some cases, you may want to prevent the default action of some event, like submit a form or go to a link.
-                            All the event handlers are called with a parameter which has info and methods related to the event. One of these methods is preventDefault, which prevent the default action of the event.
+                            All the event handlers are called with a parameter which has info and methods related to the event. One of these methods is preventDefault, which prevents the default action of the event.
                             Returning false from an event handler will automatically call event.stopPropagation() and event.preventDefault().
                           </p>
                           <h4>Example</h4>
@@ -765,8 +831,8 @@
                           <div class="tabs-content" data-tabs-content="example13-tabs">
                             <div class="tabs-panel is-active" id="result-example13">
                               <div class="example">
-        <p><b>Prevent the anchor to go to the link.</b></p>
-        <a href="http://www.github.com" class="anchor">Github homepage</a>
+<p><b>Prevent the anchor from going to the link.</b></p>
+<a href="http://www.github.com" class="anchor">Github homepage</a>
                               </div>
                             </div>
                             <div class="tabs-panel" id="html-example13">
@@ -783,13 +849,13 @@
                             </div>
                           </div>
                             <script>
-        (function () {
-          var $container = $('#prevent-default');
+(function () {
+  var $container = $('#prevent-default');
 
-          $container.find('.anchor').on('click', function (event) {
-            event.preventDefault();
-          });
-        })();
+  $container.find('.anchor').on('click', function (event) {
+    event.preventDefault();
+  });
+})();
                             </script>
                           </div>
 
@@ -807,11 +873,11 @@
                             <div class="tabs-content" data-tabs-content="example14-tabs">
                               <div class="tabs-panel is-active" id="result-example14">
                                 <div class="example">
-      <p><b>Bind an event handler to the click of the button-container, but prevent the bubbling from the button click.</b></p>
-      <div class="button-container">
-        <button type="button" class="button1 button">BUTTON 1</button>
-        <button type="button" class="button2 button">BUTTON 2</button>
-      </div>
+<p><b>Bind an event handler to the click of the button-container, but prevent the bubbling from the button click.</b></p>
+<div class="button-container">
+  <button type="button" class="button1 button">BUTTON 1</button>
+  <button type="button" class="button2 button">BUTTON 2</button>
+</div>
                                 </div>
                               </div>
                               <div class="tabs-panel" id="html-example14">
@@ -828,17 +894,17 @@
                               </div>
                             </div>
                               <script>
-      (function () {
-        var $container = $('#stop-propagation');
+(function () {
+  var $container = $('#stop-propagation');
 
-        $container.find('.button-container').on('click', function () {
-          alert('container');
-        });
+  $container.find('.button-container').on('click', function () {
+    alert('container');
+  });
 
-        $container.find('.button1').on('click', function (event) {
-          event.stopPropagation();
-        });
-      })();
+  $container.find('.button1').on('click', function (event) {
+    event.stopPropagation();
+  });
+})();
                               </script>
                             </div>
 
@@ -857,10 +923,10 @@
                               <div class="tabs-content" data-tabs-content="example15-tabs">
                                 <div class="tabs-panel is-active" id="result-example15">
                                   <div class="example">
-        <p><b>Bind two event handler to the click of button and stop the event propagation in the first event handler.</b></p>
-        <div class="button-container">
-          <button type="button" class="button1 button">BUTTON 1</button>
-        </div>
+<p><b>Bind two event handler to the click of button and stop the event propagation in the first event handler.</b></p>
+<div class="button-container">
+  <button type="button" class="button1 button">BUTTON 1</button>
+</div>
                                   </div>
                                 </div>
                                 <div class="tabs-panel" id="html-example15">
@@ -877,21 +943,21 @@
                                 </div>
                               </div>
                                 <script>
-        (function () {
-          var $container = $('#stop-immediate-propagation');
+(function () {
+  var $container = $('#stop-immediate-propagation');
 
-          $container.find('.button-container').on('click', function () {
-            alert('container');
-          });
+  $container.find('.button-container').on('click', function () {
+    alert('container');
+  });
 
-          $container.find('.button1').on('click', function (event) {
-            event.stopImmediatePropagation();
-          });
+  $container.find('.button1').on('click', function (event) {
+    event.stopImmediatePropagation();
+  });
 
-          $container.find('.button1').on('click', function (event) {
-            alert('second handler!');
-          });
-        })();
+  $container.find('.button1').on('click', function (event) {
+    alert('second handler!');
+  });
+})();
                                 </script>
                               </div>
             </div>
@@ -915,9 +981,9 @@
                 <div class="tabs-content" data-tabs-content="example17-tabs">
                   <div class="tabs-panel is-active" id="result-example17">
                     <div class="example">
-      <p><b>Print in the .response-container the response from the url: response.json </b></p>
-      <div class="response-container">
-      </div>
+<p><b>Print in the .response-container the response from the url: response.json. </b></p>
+<div class="response-container">
+</div>
                     </div>
                   </div>
                   <div class="tabs-panel" id="html-example17">
@@ -934,14 +1000,14 @@
                   </div>
                 </div>
                   <script>
-      (function () {
-        var $container = $('#ajax-get');
-        $.ajax('response.json', {
-          success: function (data) {
-            $container.find('.response-container').html(JSON.stringify(data));
-          }
-        });
-      })();
+(function () {
+  var $container = $('#ajax-get');
+  $.ajax('response.json', {
+    success: function (data) {
+      $container.find('.response-container').html(JSON.stringify(data));
+    }
+  });
+})();
                   </script>
                 </div>
 
@@ -958,15 +1024,15 @@
                   <div class="tabs-content" data-tabs-content="example18-tabs">
                     <div class="tabs-panel is-active" id="result-example18">
                       <div class="example">
-        <p><b>Serialize the form using serialize and serializeArray and print the result. Send this data to the response.json url </b></p>
-        <form class="form">
-          <input name="text" type="text" value="Hello"/>
-          <input name="cb" type="checkbox" value="1" checked class="checkbox"/>
-        </form>
-        <div class="serialize">
-        </div>
-        <div class="serialize-array">
-        </div>
+<p><b>Serialize the form using serialize and serializeArray and print the result. Send this data to the response.json url. </b></p>
+<form class="form">
+  <input name="text" type="text" value="Hello"/>
+  <input name="cb" type="checkbox" value="1" checked class="checkbox"/>
+</form>
+<div class="serialize">
+</div>
+<div class="serialize-array">
+</div>
                       </div>
                     </div>
                     <div class="tabs-panel" id="html-example18">
@@ -983,16 +1049,16 @@
                     </div>
                   </div>
                     <script>
-        (function () {
-          var $container = $('#ajax-serialize');
+(function () {
+  var $container = $('#ajax-serialize');
 
-          $container.find('.serialize').html($container.find('.form').serialize());
-          $container.find('.serialize-array').html(JSON.stringify($container.find('.form').serializeArray()));
-          $.ajax('response.json', {
-            method: 'GET',
-            data: $container.find('.form').serializeArray()
-          });
-        })();
+  $container.find('.serialize').html($container.find('.form').serialize());
+  $container.find('.serialize-array').html(JSON.stringify($container.find('.form').serializeArray()));
+  $.ajax('response.json', {
+    method: 'GET',
+    data: $container.find('.form').serializeArray()
+  });
+})();
                     </script>
                   </div>
 
@@ -1017,9 +1083,9 @@
                     <div class="tabs-content" data-tabs-content="example19-tabs">
                       <div class="tabs-panel is-active" id="result-example19">
                         <div class="example">
-          <p><b>Print in the .response-container the response from the url: response.json using the promise</b></p>
-          <div class="response-container">
-          </div>
+<p><b>Print in the .response-container the response from the url: response.json using the promise.</b></p>
+<div class="response-container">
+</div>
                         </div>
                       </div>
                       <div class="tabs-panel" id="html-example19">
@@ -1036,16 +1102,16 @@
                       </div>
                     </div>
                       <script>
-          (function () {
-            var $container = $('#ajax-promise');
-            $.ajax('response.json').done(function (data) {
-              $container.find('.response-container').html(JSON.stringify(data));
-            }).fail(function () {
-              // Do anything
-            }).always(function () {
-              // Do anything
-            });
-          })();
+(function () {
+  var $container = $('#ajax-promise');
+  $.ajax('response.json').done(function (data) {
+    $container.find('.response-container').html(JSON.stringify(data));
+  }).fail(function () {
+    // Do anything
+  }).always(function () {
+    // Do anything
+  });
+})();
                       </script>
                     </div>
 
@@ -1055,10 +1121,9 @@
                   <ul>
                     <li><a href="http://api.jquery.com/">jQuery documentation</a></li>
                     <li><a href="https://learn.jquery.com/">Learn jQuery</a></li>
-                    <li><a href="https://oscarotero.com/jquery/">Cheat sheet</a></li>
+                    <li><a href="https://oscarotero.com/jquery/">jQuery Cheat sheet</a></li>
                     <li><a href="https://github.com/AllThingsSmitty/jquery-tips-everyone-should-know">jQuery tips everyone should know</a></li>
-                    <li><a href=""></a></li>
-                    <li><a href=""></a></li>
+                    <li><a href="http://gregfranko.com/jquery-best-practices">jQuery Best Practices</a></li>
                   </ul>
                 </div>
               <ul>
@@ -1071,11 +1136,34 @@
               </nav>
             </div>
           </div>
+          <div class="row">
+            <div class="footer text-center">
+              Created by <strong>Albert González</strong><br>
+              <a href="https://github.com/albert-gonzalez/jquery-tips">Github</a>
+            </div>
+          </div>
       </div>
     </div>
   </div>
 
   <script>
+  (function () {
+
+    function printMDIndex() {
+      var index = '';
+
+      $('h2, h3').each(function () {
+        var $element = $(this);
+        if ($element.is('h3')) {
+          index += ' * [' + $element.text() + '](https://albert-gonzalez.github.io/jquery-tips#' + $element.parents('div').attr('id') + ')\n';
+        } else if ($element.is('h2')) {
+          index += '* [' + $element.text() + '](https://albert-gonzalez.github.io/jquery-tips#' + $element.attr('id') + ')\n';
+        }
+      });
+
+      console.log(index);
+    }
+    
     var $leftMenu = $('.left-menu');
     var $rightMenu = $('.right-menu');
 
@@ -1098,14 +1186,7 @@
       } else if ($element.is('h2')) {
         $leftMenu.append('<li><a data-close href="#' + $element.attr('id')+ '">' + $element.text() + '</a></li>');
       }
-    })
-
-
-    /*$leftMenu.find('li').on('click', function () {
-      setTimeout(function () {
-        $('.title-bar').foundation('_calc', true, 0);
-      }, 300);
-    });*/
+    });
 
     $(document).foundation();
 
@@ -1114,6 +1195,7 @@
         $('.title-bar').foundation('_calc', true, 0);
       }, 550);
     });
+  })();
 
   </script>
 </body>
