@@ -1,7 +1,7 @@
 <html>
 <head>
-  <title>Jquery Tips and Examples</title>
-  <meta name="description" content="Useful jQuery Tips and Information" />
+  <title>jQuery Tips and Examples</title>
+  <meta name="description" content="Useful jQuery Tips and Examples" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="node_modules/foundation-sites/dist/foundation.min.css" />
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/default.min.css" />
@@ -32,9 +32,7 @@
       <div class="off-canvas position-left black" id="offCanvas" data-off-canvas style="height:100%;">
         <!-- Menu -->
         <ul class="vertical menu left-menu">
-
         </ul>
-
       </div>
 
       <div class="off-canvas-content" data-off-canvas-content>
@@ -50,6 +48,7 @@
               <h2 id="selectors" data-magellan-target="selectors">Selectors</h2>
               <p>Jquery has a search engine which allows us to make queries with CSS selectors to retrieve DOM elements. The following tips show how to use them properly.</p>
               <p><strong>Reference: </strong><a href="http://api.jquery.com/category/selectors/">jQuery Selectors Documentation</a></p>
+
 
                 <div id="avoid-jquery-selectors" class="section">
                   <h3>Avoid jQuery Selector Extensions</h3>
@@ -234,6 +233,7 @@
 })();
                           </script>
                         </div>
+
 
                         <div id="id-save-container" class="section">
                           <h3>Save repeated container references</h3>
@@ -594,7 +594,7 @@
               <p><strong>Reference: </strong><a href="http://api.jquery.com/category/events/">jQuery Event Documentation</a></p>
 
               <div id="on-or-named" class="section">
-                <h3>on() vs. "shortcut"?</h3>
+                <h3>on() vs. "shortcut"</h3>
                 <p>We have two ways to listen to events. The function jQueryObject.on() allow us to bind a handler to any kind of event.
                   Most of events have a named method which is a shortcut to the on listener, like click(), change(), focus(), etc. There is no difference between these two methods (but on() allow you to add a namespace to the event), use the method which suits you.</p>
                 <h4>Example</h4>
@@ -910,7 +910,7 @@
 
 
                             <div id="stop-immediate-propagation" class="section">
-                              <h3>Keeping rest of the handlers from being executed</h3>
+                              <h3>Keeping the rest of the handlers from being executed</h3>
                               <p>If an element has more than one event handler attached and you want that sometimes
                                 one of the handlers keeps the rest of the handlers from being executed you have to use Event.stopImmediatePropagation.
                               This method prevents also the event from bubbling up. Note that handlers bound to an element are called in the same order that they were bound.</p>
